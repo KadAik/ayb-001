@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'stylesheet.css' %}">
+</head>
+<body>
+    <header>
+        <h2>Head</h2>
+    </header>
+    <main>
+        <nav id="filter-nav-bar">
+            <ul id="filter-items">
+                <li>Name</li>
+                <li>Date</li>
+                <li>Price</li>
+                <li>Category</li>
+            </ul>
+        </nav>
+        <div id="search-bar">
+            <input id="query" type="search" placeholder="Search...">
+        </div>
+        <div id="table-content">
+            <table>
+                <!--<caption>Liste des membres</caption>-->
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Age</th>
+                        <th>Sex</th>
+                        <th>BP</th>
+                        <th>Cholesterol</th>
+                        <th>Na_to_K</th>
+                        <th>Drug</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    {%  for obj in query_result %}
+                        <tr>
+                            <td>{{ obj.id }}</td>
+                            <td>{{ obj.Age }}</td>
+                            <td>{{ obj.Sex }}</td>
+                            <td>{{ obj.BP }}</td>
+                            <td>{{ obj.Cholesterol }}</td>
+                            <td>{{ obj.Na_to_K }}</td>
+                            <td>{{ obj.Drug }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+    </main>
+    <footer>
+       Footer
+    </footer>
+</body>
+</html>

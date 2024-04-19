@@ -11,9 +11,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
+import sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# --New-- Adding the path to my module to sys.path
+sys.path.append(os.path.join(BASE_DIR, 'dem1/utilities'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -36,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    # Ok to serve static files such as CCS, Images, JS...
     'django.contrib.staticfiles',
     # App dem1 registering
     'dem1.apps.Dem1Config',
@@ -119,6 +124,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# --New-- Configuring an additional list of static directory
+STATICFILES_DIRS = [
+    "C:/Users/rodol/Documents/demo/demo/djangoProject/dem1/templates/dem1/css",
+    "C:/Users/rodol/Documents/demo/demo/djangoProject/dem1/templates/dem1/js",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
