@@ -1,10 +1,23 @@
 
 
-def data_query(conn, output_limit=20):
-    query = ("SELECT *\n"
-             "FROM drug\n"
-             "LIMIT 30;\n"
-             " ")
+def data_query(conn, query, output_limit=50):
+    """
+    Query a database and return the query set as a list of rows (objects) consisting in a map :
+    JSON style.
+    Parameters
+    ----------
+    conn: mysql.connector.Connexion
+    The database connexion
+    query: str
+    The query as a string
+    output_limit: int DEFAULT 50
+    Limit the result set to a maximum of rows
+
+    Returns
+    -------
+    list_obj: list
+    List of objects in JSON style; each object is a row in the result set
+    """
     cursor = conn.cursor()
     cursor.execute(query)
     # print("Debugging point for : data_query...")
@@ -27,4 +40,4 @@ def data_query(conn, output_limit=20):
         result[result_dict_list[j]["id"]] = result_dict_list[j]
     """
 
-    return {"query_result": list_obj}
+    return list_obj
