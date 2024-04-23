@@ -62,6 +62,11 @@ tbody tr:nth-child(even) {
     background-color: darkgray;
 }
 
+.table-header-link:hover {
+    cursor: pointer;
+    background-color: cadetblue;
+}
+
 footer{
     background-color: cornsilk;
 }

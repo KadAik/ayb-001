@@ -5,6 +5,8 @@
     <title>Home page</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'stylesheet.css' %}">
+    {% load static %}
+    <script src="{% static 'script.js' %}"></script>
 </head>
 <body>
     <header>
@@ -25,15 +27,15 @@
         <div id="table-content">
             <table>
                 <!--<caption>Liste des membres</caption>-->
-                <thead>
+                <thead id="main-table-head" data-url="{% url 'index' %}">
                     <tr>
-                        <th>id</th>
-                        <th>Age</th>
-                        <th>Sex</th>
-                        <th>BP</th>
-                        <th>Cholesterol</th>
-                        <th>Na_to_K</th>
-                        <th>Drug</th>
+                        <th class="table-header-link" data-header-col="id">id</th>
+                        <th class="table-header-link" data-header-col="Age">Age</th>
+                        <th class="table-header-link" data-header-col="Sex">Sex</th>
+                        <th class="table-header-link" data-header-col="BP">BP</th>
+                        <th class="table-header-link" data-header-col="Cholesterol">Cholesterol</th>
+                        <th class="table-header-link" data-header-col="Na_to_K">Na_to_K</th>
+                        <th class="table-header-link" data-header-col="Drug">Drug</th>
                     </tr>
 
                 </thead>

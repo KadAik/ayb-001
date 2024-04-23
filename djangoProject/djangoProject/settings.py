@@ -17,7 +17,7 @@ import sys
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # --New-- Adding the path to my module to sys.path
-sys.path.append(os.path.join(BASE_DIR, 'dem1/utilities'))
+
 
 
 # Quick-start development settings - unsuitable for production
