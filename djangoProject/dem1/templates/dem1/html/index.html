@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="{% static 'stylesheet.css' %}">
     {% load static %}
     <script src="{% static 'script.js' %}"></script>
+    <!--Safely outputs a Python object sent by django as JSON, wrapped in a <script> tag,
+    ready for use with JavaScript; with json_script.-->
+    {{ query_result|json_script:"query_result" }}
+    <!-- We then call JS function to render the table at the loading of the page-->
+    <!-- Index rendered url -->
+    <input id="index-page" name="data-url" type="hidden" value="{% url 'index' %}">
 </head>
 <body>
     <header>
@@ -25,37 +31,7 @@
             <input id="query" type="search" placeholder="Search...">
         </div>
         <div id="table-content">
-            <table>
-                <!--<caption>Liste des membres</caption>-->
-                <thead id="main-table-head" data-url="{% url 'index' %}">
-                    <tr>
-                        <th class="table-header-link" data-header-col="id">id</th>
-                        <th class="table-header-link" data-header-col="Age">Age</th>
-                        <th class="table-header-link" data-header-col="Sex">Sex</th>
-                        <th class="table-header-link" data-header-col="BP">BP</th>
-                        <th class="table-header-link" data-header-col="Cholesterol">Cholesterol</th>
-                        <th class="table-header-link" data-header-col="Na_to_K">Na_to_K</th>
-                        <th class="table-header-link" data-header-col="Drug">Drug</th>
-                    </tr>
 
-                </thead>
-                <tbody>
-                    {%  for obj in query_result %}
-                        <tr>
-                            <td>{{ obj.id }}</td>
-                            <td>{{ obj.Age }}</td>
-                            <td>{{ obj.Sex }}</td>
-                            <td>{{ obj.BP }}</td>
-                            <td>{{ obj.Cholesterol }}</td>
-                            <td>{{ obj.Na_to_K }}</td>
-                            <td>{{ obj.Drug }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-                <tfoot>
-
-                </tfoot>
-            </table>
         </div>
     </main>
     <footer>
