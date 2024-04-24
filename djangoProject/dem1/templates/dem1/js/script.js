@@ -1,17 +1,30 @@
 const headers = ["id", "Age", "Sex", "BP", "Cholesterol", "Na_to_K", "Drug"];
 document.addEventListener('DOMContentLoaded', main);
-function main(event){
-    table_building();
+function main(event) {
+    table_building(true);
     // Getting the rendered url
-    const url = document.getElementById("main-table-head").dataset.url;
+    const url = document.getElementById("index-page").value;
     console.log(url + " => Threw from function main");
-    // Getting clickable headers
-    const headers = document.getElementsByClassName("table-header-link");
-    // Binding listener to headers
-    for (let element of headers){
-        element.addEventListener('click', (event) => process_header_click(event, element, url));
+    // Cause of event bubbling, event delegation will be used to handle header click as
+    // in case of table dynamic changing, event binding to each clickable header persists.
+    // On each filtering, the table is entirely rebuilt so the event will be attached to the
+    // stable table parent : div in this case
+    const table_stable_parent = document.querySelector("#table-content");
+    // Listening of click on table headers :
+    table_stable_parent.addEventListener('click', (event) => {
+            if (event.target.nodeName === 'TH') {
+                process_header_click(event, event.target, url)
+            }
         }
-    }
+    );
+}
+    // // Getting clickable headers
+    // const head_elements = document.getElementsByClassName("table-header-link");
+    // // Binding listener to headers
+    // for (let element of head_elements){
+    //     element.addEventListener('click', (event) => process_header_click(event, element, url));
+    //     }
+    // }
 
 
 async function fetch_table_data(url, to_post){
@@ -46,7 +59,7 @@ function process_header_click(event, element, url){
             }
             return resp.json();
         })
-        .then((data) => console.log(data))
+        .then((data) => table_building(false, data))
         .catch((error) => console.error("Error during fetching : ", error));
 }
 
@@ -54,9 +67,9 @@ function table_builder(table, headers){
 
     //table head building
     // Getting the url value for th columns (index page)
-    const url = document.getElementById("index-page").value;
-    console.log("URL value : " + url + " => threw from function table_builder");
-    let thead_builder = `<thead id="main-table-head" data-url=${url}> <tr>`;
+    const url_link = document.getElementById("index-page").value;
+    console.log("URL value : " + url_link + " => threw from function table_builder");
+    let thead_builder = `<thead id="main-table-head" data-url=${url_link}> <tr>`;
     for (let col of headers){
         thead_builder += `<th class="table-header-link" data-header-col=${col}>` +
             col + "</th>";
@@ -81,17 +94,23 @@ function table_builder(table, headers){
     return table_built;
 }
 
-function table_building(){
-    // query_result in an array
-    const  query_result = document.querySelector("#query_result").textContent;
-    console.log(query_result);
-    console.log(typeof(query_result));
-    console.log("Parsing ...")
-    const result_set = JSON.parse(query_result);
-    console.log(result_set);
-    console.log(typeof(result_set));
+function table_building(initial_building, data){
+    let query_result;
+    if (initial_building){
+        // query_result in an array
+        query_result = document.querySelector("#query_result").textContent;
+        console.log(query_result);
+        console.log(typeof(query_result));
+        console.log("Parsing ...")
+        query_result = JSON.parse(query_result);
+        console.log(query_result);
+        console.log(typeof(query_result));
+    }else{
+        query_result = data["query_result"];
+    }
+
     // Table building
-    const built_table = table_builder(result_set, headers);
+    const built_table = table_builder(query_result, headers);
     // Table rendering
     document.querySelector("#table-content").innerHTML = built_table;
     console.log(built_table);
